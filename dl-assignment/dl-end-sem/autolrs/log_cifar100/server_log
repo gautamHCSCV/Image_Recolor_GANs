@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "autolrs_server.py", line 364, in <module>
-    main() 
-  File "autolrs_server.py", line 361, in main
-    Controller(args.host, args.port, args.min_lr, args.max_lr).listen()
-  File "autolrs_server.py", line 111, in __init__
-    self.sock.bind((self.host, self.port))
-OSError: [Errno 98] Address already in use
