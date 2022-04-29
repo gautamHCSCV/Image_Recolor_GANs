@@ -19,3 +19,9 @@ epoch: [5/15], gene_loss: 11.73, disc_loss: 0.03
 epoch: [6/15], gene_loss: 11.41, disc_loss: 0.14
 [W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
 [W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+epoch: [7/15], gene_loss: 12.51, disc_loss: 0.06
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+epoch: [8/15], gene_loss: 12.08, disc_loss: 0.09
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
