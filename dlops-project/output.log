@@ -1,0 +1,9 @@
+cuda:7
+313
+500
+epoch: [1/15], gene_loss: 11.07, disc_loss: 0.36
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+epoch: [2/15], gene_loss: 10.08, disc_loss: 0.14
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
