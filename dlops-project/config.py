@@ -1,8 +1,8 @@
 import torch
 class configs(object):
-    epochs = 50
+    epochs = 45
     lr= 2e-4
-    batch_size=16
+    batch_size=32
     pin_memory = True
     num_workers=4
     seed = 42
