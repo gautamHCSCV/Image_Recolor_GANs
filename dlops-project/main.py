@@ -82,7 +82,7 @@ def pipeline():
     plotloss(history)
     test_model(gene,val_data)
     
-    # torch.save(gene.state_dict(),config.model_path)
+    torch.save(gene.state_dict(),config.model_path)
 
 
 if __name__ == '__main__':
