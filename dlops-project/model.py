@@ -11,7 +11,10 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from config import config
+import wandb
 
+# api_key = 'ae12d9032b94bfedc39f2e1beacfbf9909359ffc'
+# os.environ['WANDB_API_KEY'] = api_key
 class cnnblock(nn.Module):
     def __init__(self,in_channels,out_channels,stride=2):
         super(cnnblock, self).__init__()
@@ -167,12 +170,20 @@ def test():
     print(model(random_img).shape)
 
 def train(net_g,net_d,train_data,bce,l1_loss,o_gen,o_dis,g_scalar,d_scalar,n_epochs = config.epochs):
+    api_key = 'ae12d9032b94bfedc39f2e1beacfbf9909359ffc'
+    os.environ['WANDB_API_KEY'] = api_key
+    os.environ["WANDB_MODE"] = "offline"
+    wandb.init(project="DLOPs Project")
     net_g.train()
     net_d.train()
     time1 = time.perf_counter()
     history = {'genloss':[],'discloss':[]}
 
     for epoch in range(n_epochs):
+        wandb.watch(net_g, bce, log="all", log_freq=10)
+        wandb.watch(net_g, l1_loss, log="all", log_freq=10)
+        wandb.watch(net_d, bce, log="all", log_freq=10)
+
         running_gene_loss = 0;
         running_disc_loss = 0;
         len_train = len(train_data)
@@ -210,6 +221,8 @@ def train(net_g,net_d,train_data,bce,l1_loss,o_gen,o_dis,g_scalar,d_scalar,n_epo
 
             running_gene_loss += (g_loss.item()/len_train)
             running_disc_loss += (d_loss.item()/len_train)
+            wandb.log({'gen_loss':g_loss.item()})
+            wandb.log({'disc_loss':d_loss.item()})
 
             if config.verbose:
                 print(f'batches_done:{idx}',end='\r')

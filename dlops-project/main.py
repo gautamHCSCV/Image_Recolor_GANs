@@ -59,7 +59,9 @@ def plotloss(history):
     plt.show()
 
 def pipeline():
-    os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"  
+    os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
+    # api_key = 'ae12d9032b94bfedc39f2e1beacfbf9909359ffc'
+    # os.environ['WANDB_API_KEY'] = api_key 
     # os.environ["CUDA_VISIBLE_DEVICES"]=config.gpu_id
     
     torch.backends.cudnn.benchmarks = True
