@@ -12,6 +12,8 @@ import torch.optim as optim
 import torch.nn.functional as F
 from config import config
 from Customdata import get_dataloader
+import onnx
+import onnxruntime
 # from model import return_models
 
 class block(nn.Module):
@@ -129,14 +131,27 @@ gene = return_models()
 gene.load_state_dict(torch.load(config.model_path))
 gene.eval()
 
-x = torch.randn((1,3,256,256), dtype=torch.float32, device=config.device)
+print(onnxruntime.get_device())
 
-torch.onnx.export(gene,                       # model being run
-                  x,                           # model input (or a tuple for multiple inputs)
-                  './generator.onnx',             # Path to saved onnx model
-                  export_params=True,          # store the trained parameter weights inside the model file
-                  opset_version=13,            # the ONNX version to export the model to
-                  input_names = ['input'],     # the model's input names
-                  output_names = ['output'],   # the model's output names
-                  dynamic_axes={'input' : {0 : 'batch_size'},    # variable length axes
-                                'output' : {0 : 'batch_size'}})
+session = onnxruntime.InferenceSession('./generator.onnx',providers=['CUDAExecutionProvider'])
+input_name = session.get_inputs()[0].name
+output_name = session.get_outputs()[0].name
+
+print(input_name)
+print(output_name)
+
+sample_images = next(iter(val_data))
+bnwhite,colored = np.array(list(map(lambda x:x.numpy(),sample_images)))
+# print(sample_images.shape)
+# print(type(sample_images))
+bnwhite = bnwhite[:5]
+colored = colored[:5]
+result = session.run([output_name],{input_name:bnwhite})[0]
+print(result.shape)
+
+for i in range(5):
+    img = torch.cat([torch.from_numpy(bnwhite[i]),torch.from_numpy(colored[i]),torch.from_numpy(result[i])],dim=2)
+    plt.figure(figsize=(10,8))
+    plt.imshow(img.permute(1,2,0).cpu().numpy())
+    plt.savefig(f'onnx_inference_{i}.svg',format='svg')
+    plt.show()
